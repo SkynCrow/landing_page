@@ -7,7 +7,7 @@ export default function GlobalRoute() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Container >
+    <Container>
     {isAuthenticated ? <PrivateRoute /> : <PublicRoute />}
     </Container>
   )
