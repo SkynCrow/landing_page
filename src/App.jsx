@@ -4,17 +4,19 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { DataProvider } from "./contexts/DataContext";
 import GlobalRoute from "./pages/GlobalRoute";
 import { CustomThemeProvider } from "./contexts/ThemeContext";
+import StatsProvider from "./contexts/StatsProvider";
 function App() {
-
   return (
     <CustomThemeProvider>
       <AuthProvider>
         <DataProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route index path="/" element={<GlobalRoute />} />
-            </Routes>
-          </BrowserRouter>
+          <StatsProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route index path="/" element={<GlobalRoute />} />
+              </Routes>
+            </BrowserRouter>
+          </StatsProvider>
         </DataProvider>
       </AuthProvider>
     </CustomThemeProvider>
