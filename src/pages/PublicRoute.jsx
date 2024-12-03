@@ -2,22 +2,19 @@ import { Container } from "@mui/material";
 import Navbar from "../components/Navbar";
 import FloatingDebug from "../components/FloatingDebug";
 import { useEffect, useState } from "react";
+import PropTypes from 'prop-types';
 
-export default function PublicRoute() {
-  const [t,setT] = useState("Hello World");
-  useEffect (() => {
-    if (window.matchMedia("(orientation: portrait)").matches) {
-      setT("Portrait");
-    }
-    else {
-      setT("Landscape");
-    }
-  }
-  ,[]);
+PublicRoute.propTypes = {
+  children: PropTypes.node,
+};
+
+export default function PublicRoute({ children }) {
+  
   return (
     <Container>
       <Navbar />
-      <FloatingDebug text={t} />
+      {children}
+      <FloatingDebug/>
     </Container>
   );
 }

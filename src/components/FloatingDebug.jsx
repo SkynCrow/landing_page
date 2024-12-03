@@ -1,14 +1,14 @@
 import { Box, Typography } from '@mui/material';
-import PropTypes from 'prop-types';
 import useAuth from '../hooks/useAuth';
 import useStats from '../hooks/useStats';
-FloatingDebug.propTypes = {
-    text: PropTypes.string.isRequired,
-};
+import { useEffect } from 'react';
 
 export default function FloatingDebug () {
     const { isAuthenticated } = useAuth();
-    const { clicks } = useStats();
+    const { lastClick } = useStats();
+    useEffect(() => {
+        console.log('FloatingDebug rendered');
+    }, []);
     return (
         <Box
             sx={{
@@ -22,7 +22,7 @@ export default function FloatingDebug () {
                 textAlign: 'center',
             }}
         >
-            <Typography variant="body1">Clicks: {clicks.toString()}</Typography>
+            <Typography variant="body1">Clicks: {JSON.stringify(lastClick)}</Typography>
             <Typography variant="body1">Is authenticated: {isAuthenticated ? 'Yes' : 'No'}</Typography>
         </Box>
     );

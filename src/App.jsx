@@ -5,6 +5,7 @@ import { DataProvider } from "./contexts/DataContext";
 import GlobalRoute from "./pages/GlobalRoute";
 import { CustomThemeProvider } from "./contexts/ThemeContext";
 import StatsProvider from "./contexts/StatsProvider";
+import Proyects from "./pages/Proyects";
 function App() {
   return (
     <CustomThemeProvider>
@@ -13,7 +14,12 @@ function App() {
           <StatsProvider>
             <BrowserRouter>
               <Routes>
-                <Route index path="/" element={<GlobalRoute />} />
+                <Route path="/" element={<GlobalRoute />}>
+                  <Route index element={<h1>Home</h1>} />
+                  <Route path="about" element={<h1>About</h1>} />
+                  <Route path="contact" element={<h1>Contact</h1>} />
+                  <Route path="projects" element={<Proyects/>} />
+                </Route>
               </Routes>
             </BrowserRouter>
           </StatsProvider>
