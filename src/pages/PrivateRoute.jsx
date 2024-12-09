@@ -6,10 +6,9 @@ PrivateRoute.propTypes = {
 };
 
 export default function PrivateRoute({ children }) {
-  const { isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) 
-    return children;
-  else
-   return null
+  return (
+    <div>
+      {children}
+    </div>
+  );
 }

@@ -8,42 +8,39 @@ import LoginButton from "./LoginButton";
 import AccountMenu from "./AccountMenu";
 import { useCallback } from "react";
 import useStats from "../hooks/useStats";
+
 export default function Navbar() {
 
-  const { theme, toggleTheme } = useTheme();
-  const { isAuthenticated } = useAuth();
-  const { Track } = useStats();
-
-  const Toggle = useCallback(() => {
-    Track("theme.button");
-    toggleTheme();
-  }, [toggleTheme, Track]);
-
   return (
-    <Paper sx={{ width: "100%" }} elevation={5} m={1}>
-      <Grid2 container justifyContent={"space-between"} py={1} px={2}>
-        <Grid2>
-          <Typography variant="h6">App</Typography>
-        </Grid2>
-        <Grid2 container>
-          <ButtonGroup>
-            <Button variant="contained" color="primary" id="button.home">
-              Home
-            </Button>
-            <Button variant="contained" color="primary" id="button.about">
-              About
-            </Button>
-            <Button variant="contained" color="primary" id="button.contact">
-              Contact
-            </Button>
-          </ButtonGroup>
-          <IconButton onClick={Toggle} id="theme.button">
-            {theme !== "light" ? <LightMode /> : <DarkMode />}
-          </IconButton>
-          {!isAuthenticated && <LoginButton />}
-          {isAuthenticated && <AccountMenu />}
-        </Grid2>
+    <Grid2
+      container
+      component={Paper}
+      px={2}
+      py={1}
+      mt={1}
+      width={"80%"}
+      position={"sticky"}
+      top={0}
+      justifyContent={"space-between"}
+    >
+      <Grid2>
+        <Typography variant="h4">Navbar</Typography>
       </Grid2>
-    </Paper>
+      <Grid2 container gap={3}>
+        <ButtonGroup size="small" aria-label="Small button group">
+          <Button variant="outlined" color="primary" id="button.home" fontSize={"inherit"}>
+            Home
+          </Button>
+          <Button variant="outlined" color="primary" id="button.about" fontSize={"inherit"}>
+            About
+          </Button>
+          <Button variant="outlined" color="primary" id="button.contact" fontSize={"inherit"}>
+            Contact
+          </Button>
+        </ButtonGroup>
+        
+        <AccountMenu />
+      </Grid2>
+    </Grid2>
   );
 }

@@ -1,26 +1,28 @@
-import { Container } from "@mui/material";
+import { Grid2 } from "@mui/material";
 import useAuth from "../hooks/useAuth";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
-import PropTypes from "prop-types";
+import Navbar from "../components/Navbar";
+import FloatingDebug from "../components/FloatingDebug";
+import { Outlet } from "react-router-dom";
 
-GlobalRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export default function GlobalRoute({ children }) {
+export default function GlobalRoute() {
   const { isAuthenticated } = useAuth();
 
-  if (isAuthenticated)
-    return (
-      <Container>
-        <PrivateRoute>{children}</PrivateRoute>
-      </Container>
-    );
-  else
-    return (
-      <Container>
-        <PublicRoute>{children}</PublicRoute>
-      </Container>
-    );
+  return (
+    <Grid2 container direction={"column"}  justifyContent={"center"} alignItems={"center"} gap={3}>
+      <Navbar />
+      {!isAuthenticated && (
+        <PublicRoute>
+          <Outlet />
+        </PublicRoute>
+      )}
+      {isAuthenticated && (
+        <PrivateRoute>
+          <Outlet />
+        </PrivateRoute>
+      )}
+      <FloatingDebug />
+    </Grid2>
+  );
 }
