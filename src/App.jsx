@@ -1,9 +1,9 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
-import { DataProvider } from "./contexts/DataContext";
 import GlobalRoute from "./pages/GlobalRoute";
-import { CustomThemeProvider } from "./contexts/ThemeContext";
-import StatsProvider from "./contexts/StatsProvider";
+import AuthProvider from "./providers/AuthProvider";
+import DataProvider from "./providers/DataProvider";
+import CustomThemeProvider from "./providers/CustomThemeProvider";
+import StatsProvider from "./providers/StatsProvider";
 import Proyects from "./pages/Proyects";
 import Home from "./pages/Home";
 function App() {

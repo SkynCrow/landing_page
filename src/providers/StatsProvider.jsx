@@ -1,11 +1,11 @@
 // #region Imports
 import propTypes from "prop-types";
 import { useCallback, useEffect, useState } from "react";
-import StatsContext from "./StatsContext";
+import StatsContext from "../contexts/StatsContext";
 import useAuth from "../hooks/useAuth";
 import { GetOrientation } from "../tools";
 import { PushEvent } from "../../firebase";
-import { useLocation } from "react-router-dom";
+
 StatsProvider.propTypes = {
   children: propTypes.node.isRequired,
 };
@@ -14,12 +14,14 @@ StatsProvider.propTypes = {
 /**
  * Proveedor de contexto para estadísticas de la aplicación.
  */
-function StatsProvider({ children }) {
+export default function StatsProvider({ children }) {
   // #region Variables
   const { isAuthenticated, credentials, sessionID } = useAuth();
   const [inited, setInited] = useState(false);
   const [lastClick, setLastClick] = useState(null);
   const [lastSessionID, setLastSessionID] = useState(null);
+  const [records] = useState(new Map());
+  const [recordLenght, setRecordLenght] = useState(0);
   // Variables acotadas
   const [windowSize, setWindowSize] = useState([
     window.innerWidth,
@@ -28,14 +30,12 @@ function StatsProvider({ children }) {
   // Variables sin acotar
   const [orientation, setOrientation] = useState(GetOrientation());
   // #endregion
-
   // #region Functions
   const handleClick = useCallback((e) => {
     setLastClick({
       type: "click",
-      position: [e.clientX, e.clientY],
-      location: window.location.pathname,
-      windowSize,
+      x: e.clientX/window.innerWidth,
+      y: e.clientY/window.innerHeight,
       target: e.target.id || "untagged",
     });
   }, []);
@@ -43,20 +43,16 @@ function StatsProvider({ children }) {
     setWindowSize([window.innerWidth, window.innerHeight]);
     setOrientation(GetOrientation());
   }, []);
-  const handleUnload = useCallback(() => {
-    console.log("unload");
-    if (sessionID) PushEvent(sessionID, {
-      type: "unload",
-      location: window.location.pathname,
-      windowSize,
-      orientation,
-    });
-  }, []);
-
 
   const Register = useCallback(
     (data) => {
-      if (sessionID) PushEvent(sessionID, data);
+      if (sessionID) {
+        let time = PushEvent(sessionID, data);
+        records.set(time, data);
+        setRecordLenght(records.size);
+      }else{
+        records.clear();
+      }
     },
     [sessionID]
   );
@@ -106,7 +102,6 @@ function StatsProvider({ children }) {
   useEffect(() => {
     document.addEventListener("click", handleClick);
     window.addEventListener("resize", handleResize);
-    window.addEventListener("beforeunload", handleUnload)
     return () => {
       document.removeEventListener("click", handleClick);
       window.removeEventListener("resize", handleResize);
@@ -115,10 +110,8 @@ function StatsProvider({ children }) {
 
   // #endregion
   return (
-    <StatsContext.Provider value={{ lastClick }}>
+    <StatsContext.Provider value={{ Register,records,recordLenght }}>
       {children}
     </StatsContext.Provider>
   );
 }
-
-export default StatsProvider;

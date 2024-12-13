@@ -41,13 +41,17 @@ const logout = async () => {
 const PushEvent = (sessionID, data) => {
   if (sessionID) {
     if (data){
-      push(ref(stats_db, sessionID), data);
+      let time = Date.now()
+      push(ref(stats_db, sessionID), {...data, time});
+      return time
     }else{
       console.error("No data provided");
     }
   } else {
     console.error("No sessionID");
   }
+  return 0
+
 };
 
 export { login, logout, OnAuthStateChanged, PushEvent };

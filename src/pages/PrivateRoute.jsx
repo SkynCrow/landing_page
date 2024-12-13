@@ -1,3 +1,4 @@
+import { Grid2 } from "@mui/material";
 import useAuth from "../hooks/useAuth";
 import PropTypes from "prop-types";
 
@@ -7,8 +8,8 @@ PrivateRoute.propTypes = {
 
 export default function PrivateRoute({ children }) {
   return (
-    <div>
+    <Grid2 container width={"100%"} justifyContent={"center"} alignItems={"center"} alignContent={"center"} direction={"column"}>
       {children}
-    </div>
+    </Grid2>
   );
 }
