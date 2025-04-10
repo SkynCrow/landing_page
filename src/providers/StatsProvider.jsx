@@ -59,6 +59,7 @@ export default function StatsProvider({ children }) {
   // #endregion
   // #region Effects
   useEffect(() => {
+    
     if (isAuthenticated && sessionID && !inited && !localStorage.getItem("statsInited")) {
       PushEvent(sessionID, {
         type: "signin",
@@ -100,8 +101,10 @@ export default function StatsProvider({ children }) {
   }, [lastClick]);
 
   useEffect(() => {
+    if (import.meta.env.PROD) {
     document.addEventListener("click", handleClick);
     window.addEventListener("resize", handleResize);
+    }
     return () => {
       document.removeEventListener("click", handleClick);
       window.removeEventListener("resize", handleResize);

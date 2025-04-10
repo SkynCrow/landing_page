@@ -35,7 +35,6 @@ export default function GlobalRoute() {
           <Outlet />
         </PrivateRoute>
       )}
-      <FloatingDebug />
     </Grid2>
   );
 }

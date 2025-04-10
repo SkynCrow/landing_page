@@ -4,6 +4,6 @@ PublicRoute.propTypes = {
   children: PropTypes.node,
 };
 
-export default function PublicRoute({ children }) {
-  return children
+export default function PublicRoute() {
+  return null
 }

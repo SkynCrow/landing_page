@@ -4,7 +4,7 @@ import AuthProvider from "./providers/AuthProvider";
 import DataProvider from "./providers/DataProvider";
 import CustomThemeProvider from "./providers/CustomThemeProvider";
 import StatsProvider from "./providers/StatsProvider";
-import Proyects from "./pages/Proyects";
+import Projects from "./pages/Projects";
 import Home from "./pages/Home";
 function App() {
   return (
@@ -16,9 +16,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<GlobalRoute />}>
                   <Route index element={<Home />} />
-                  <Route path="projects" element={<Proyects />} />
-                  <Route path="knowledge" element={<h1>Contact</h1>} />
-                  <Route path="about" element={<h1>About</h1>} />
+                  <Route path="projects" element={<Projects />} />
+                  <Route path="about" element={<h1>About and Contact</h1>} />
                 </Route>
               </Routes>
             </BrowserRouter>
